@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Select Your Ship!</title>
+	<script src="http://www.cs.unc.edu/Courses/comp426-f16/jquery-3.1.0.js"></script>
+	<script src="FSOplayer.js"></script>
+	<link rel="stylesheet" type="text/css" href="FSOplayer.css">
+</head>
+
+<style>
+	body {
+        background-image: url("http://wallpapercave.com/wp/ZRPMVbm.jpg");
+    	background-repeat: no-repeat;
+    	background-size: cover;
+	}
+	#ship {
+		color: white;
+	}
+</style>
+
+
+<body>
+	<div>
+    	<h2 id="ship">Ship Selection</h2>
+		<div id="ship">
+		<select id="shipselect" name="ship" size="1">
+			<option style="display: none;">Choose Ship</option>
+			<option value="Oone">Red Rover</option>
+			<option value="Otwo">Yellow Fever</option>
+			<option value="Othree">Green Swarm</option>
+		</select>
+		</div>
+		<div>
+		<form id="ship" action="FreeStyleSpaceOdyssey.html">
+    			<input type="submit" value="Confirm" />
+		</form>
+		</div>
+		<div id="ship" class="firstship box">
+			<img src="ship1.png" />
+		</div>
+		<div id="ship" class="secondship box">
+ 			<img src="ship2.png" />
+		</div>
+		<div id="ship" class="thirdship box">
+  			<img src="ship3.png" />
+		</div>
+	</div>
+</body>
+
+</html>
