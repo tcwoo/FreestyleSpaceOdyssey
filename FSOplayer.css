@@ -1,0 +1,16 @@
+.box {
+  padding: 10px;
+  display: none;
+  margin-top: 20px;
+}
+.box img {
+  float: left
+  width: 350px;
+  height: 400px;
+}
+#welcome {
+	text-align: center;
+}
+#ship {
+	text-align: center;
+}
