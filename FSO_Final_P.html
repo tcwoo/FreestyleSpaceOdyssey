@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<title>Freestyle Space Odyssey</title>
+		<script src="FSO_Final_P.js"></script>
+	<style>
+			canvas {
+				position: absolute;
+				top: 0px;
+				left: 0px;
+				background: transparent;
+			}
+			#background { 
+				z-index: -2;
+			}
+			#main {
+				z-index: -1;
+			}
+			#ship {
+				z-index: 0;
+			}
+			html, body {
+    			width: 100%;
+    			height: 100%;
+    			margin: 0;
+   				padding: 0;
+   				overflow: hidden;
+			}
+			body {
+				background-color: black;			
+			}
+			#story {
+				float: right;
+			}
+			#title {
+				color: white;
+				font-weight: bold;
+			}
+			#instructions {
+				color: white;
+				font-weight: bold;
+				font-size: 14px;
+			}
+			.sentence {
+				color: white;
+				font-size: 12px;
+			}
+			#warning {
+				font-size: 10px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="gamecontainer">
+		<!-- The canvas for the panning background -->
+		<canvas id="background" width="960" height="626">
+			Your browser does not support canvas. Please try again with a different browser.
+		</canvas>
+		<!-- The canvas for all enemy ships and bullets -->
+		<canvas id="main" width="960" height="626">
+		</canvas>
+		<!-- The canvas the ship uses (can only move up one forth the screen.) -->
+		<canvas id="ship" width="960" height="626">
+		</canvas>
+		</div>
+		<div id="story">
+			<!--<p id="instructions">~~~~~~~~~~~Press Space to Shoot~~~~~~~~~~~</p>
+			<p id="instructions">~~~~~~~~~~~~~Press Q to Quit~~~~~~~~~~~~~</p>
+			<p id="instructions">~~~~~~~~~~~~Press R to Restart~~~~~~~~~~~~</p>-->
+			<p id="title">~~~~~~~~~Freestyle Space Odyssey~~~~~~~~~</p>
+			<button type="button" onclick="toggle_visibility1('info')">Click For Instructions</button>
+			<br>
+			<div id="info" style="display:none;">
+				<p class="sentence" id="instructions">Use the Up,&nbsp;Down,&nbsp;Left,&nbsp;and Right arrows to move.</p>
+				<p class="sentence" id="instructions">Use the Spacebar to Shoot.</p>
+				<p class="sentence" id="instructions">Press "Q" to Quit.&nbsp;Press "R" to Restart.</p>
+				<p class="sentence">Objective: Shoot the enemy ship to gain points.</p>
+				<p class="sentence">Gain enough points to go up in level.</p>
+				<p class="sentence" id="warning">*Careful, the enemy may speed up!*</p>
+				<p class="sentence">Unlock parts of a story as you travel!</p>
+			</div>
+			<br>
+			<button type="button" onclick="toggle_visibility2('first')">Click After Level 2</button>
+			<br>
+			<div id="first" style="display:none;">
+				<p class="sentence">The universe is ever expanding.</p>
+				<p class="sentence">One day it will stop the growth and begin to shrink,</p>
+				<p class="sentence">but by then I hope to be dead.</p>
+				<p class="sentence">If you are reading this, then my hopes may be fulfilled.</p>
+				<p class="sentence">I, in the sense of individualism, do not matter.</p>
+				<p class="sentence">My name is not important, but my story is a different matter.</p>
+			</div>
+			<br>
+			<button type="button" onclick="toggle_visibility3('second')">Click After Level 3</button>
+			<br>
+			<div id="second" style="display:none;">
+				<p class="sentence">Species, planets, galaxies from various corners of the universe.</p>
+				<p class="sentence">As sentient beings, our mind is constantly changing and evolving.</p>
+				<p class="sentence">But I believe it is my deal with Time</p>
+				<p class="sentence">that allows me to understand what I have seen.</p>
+			</div>
+			<br>
+			<button type="button" onclick="toggle_visibility4('third')">Click After Level 4</button>
+			<br>
+			<div id="third" style="display:none;">
+				<p class="sentence">I met Time at the same moment that I was introduced to Death.</p>
+				<p class="sentence">They are both more complex entities than I expected.</p>
+				<p class="sentence">I was stranded on Lysithea with my life support failing.</p>
+				<p class="sentence">How insignificant a place in space and time?</p>
+				<p class="sentence">Yet, this is where I learned of destiny.</p>
+			</div>
+			<br>
+			<button type="button" onclick="toggle_visibility5('fourth')">Click After Level 5</button>
+			<br>
+			<div id="fourth" style="display:none;">
+				<p class="sentence">Death appeared a step from my face.</p>
+				<p class="sentence">She glared at me with cold, white eyes.</p>
+				<p class="sentence">I saw the apparent insignificance of my existence in her eyes.</p>
+				<p class="sentence">Then, a mirage of beautiful hues appeared next to her.</p>
+				<p class="sentence">Death rolled her eyes as if this was routine as well.</p>
+				<p class="sentence">Except when a tall dark man emerged from the mirage. </p>
+			</div>
+			<br>
+			<button type="button" onclick="toggle_visibility6('fifth')" onclick ="get_shipname()">Click After Level 6</button>
+			<br>
+			<div id="fifth" style="display:none;">
+				<p class="sentence">Death seemed to be shocked by this particular man’s presence.</p>
+				<p class="sentence">They conversed for what seemed hours and yet it could not be.</p>
+				<p class="sentence">The man said his name was Time.</p>
+				<p class="sentence">He had such piercing, emerald eyes that showed</p>
+				<p class="sentence">the longevity of the universe’s existence.</p>
+				<p class="sentence">He gave me an offer that I could not in good conscience ignore.</p>
+				<p class="sentence">Now I could tell you my task but that isn’t necessary.</p>
+				<p class="sentence">You have been chosen to learn this objective.</p>
+			</div>
+			<br>
+			<button type="button" onclick="toggle_visibility7('sixth')">Click After Level 7</button>
+			<br>
+			<div id="sixth" style="display:none;">
+				<p class="sentence">I cannot die. Correction: I can die but not stay dead.</p>
+				<p class="sentence">When I die, I am restored to a moment in time that I am alive.</p>
+				<p class="sentence">Death and I have cultivated an interesting relationship.</p>
+				<p class="sentence">I am the first organism that is not divine that has seen her</p>
+				<p class="sentence">more than once without being dead. </p>
+			</div>
+			<br>
+			<button type="button" onclick="toggle_visibility8('seventh')">Click After Level 8</button>
+			<br>
+			<div id="seventh" style="display:none;">
+				<p class="sentence">The second time I saw her was during a smuggle run</p>
+				<p class="sentence">through the Epsilon Eridani solar system.</p>
+				<p class="sentence">The third was a coup d’etat on the planet, 91 Aquarii Ab,</p>
+				<p class="sentence">about 230 years after. Dying isn’t fun,</p>
+				<p class="sentence">but having a backup plan for failures is a gift. </p>
+			</div>
+			<br>
+			<button type="button" onclick="toggle_visibility9('ninth')">Click After Level 9</button>
+			<br>
+			<div id="ninth" style="display:none;">
+				<p class="sentence">This gift made me bold at first.</p>
+				<p class="sentence">Danger was of no importance to me</p>
+				<p class="sentence">Money was a quick finesse of royalty or banks away at any time.</p>
+				<p class="sentence">But, as you have probably heard before,</p>
+				<p class="sentence">Time catches up to all of us.</p>
+				<p class="sentence">We had a long conversation about my purpose,</p>
+				<p class="sentence">when suddenly, I had an epiphany.</p>
+			</div>
+			<br>
+			<button type="button" onclick="toggle_visibility10('tenth')">Click After Level 10</button>
+			<br>
+			<div id="tenth" style="display:none;">
+				<p class="sentence">A chance of a trillion lifetimes was right in front of me.</p>
+				<p class="sentence">And I was wasting it. So I set off on a great journey.</p>
+				<p class="sentence">This journey was one for knowledge.</p>
+				<p class="sentence">For witnessing and understanding cultures, species and events</p>
+				<p class="sentence">throughout the galaxies. I studied civilizations and I met</p>
+				<p class="sentence">powerful organisms that were considered gods to billions.</p>
+			</div>
+			<br>
+			<button type="button" onclick="toggle_visibility11('eleventh')">Click After Level 11</button>
+			<br>
+			<div id="eleventh" style="display:none;">
+				<p class="sentence">Men like me have amassed much knowledge in the vast universe.</p>
+				<p class="sentence">Yes, I am not the only one through history.</p>
+				<p class="sentence">I and the others were tasked with two things</p>
+				<p class="sentence">The first is to accomplish all your greatest desires.</p>
+				<p class="sentence">The second is to record it for future generations</p>
+				<p class="sentence">If you want to add to these records, then follow this step.</p>
+			</div>
+			<br>
+			<button type="button" onclick="toggle_visibility12('twelfth')">Click After Winning</button>
+			<br>
+			<div id="twelfth" style="display:none;">
+				<p class="sentence">Smile, turn around, and look into those green eyes.</p>
+			</div>
+			
+			<script>
+				/*var shipname = getQueryVariable("ship");
+				function get_shipname() {
+					document.getElementById("shipname").innerHTML = shipname;​
+				}(*/
+				function toggle_visibility1(id) {
+					var e = document.getElementById(id);
+   					if(e.style.display == "block") {
+        				e.style.display = "none";
+        			}
+    				else if (level >= 1) {
+    					e.style.display = "block";
+    				}
+				}
+				function toggle_visibility2(id) {
+					var e = document.getElementById(id);
+   					if(e.style.display == "block") {
+        				e.style.display = "none";
+        			}
+    				else if (level >= 2) {
+    					e.style.display = "block";
+    				}
+				}
+				function toggle_visibility3(id) {
+					var e = document.getElementById(id);
+   					if(e.style.display == "block") {
+        				e.style.display = "none";
+        			}
+    				else if (level >= 3) {
+    					e.style.display = "block";
+    				}
+				}
+				function toggle_visibility4(id) {
+					var e = document.getElementById(id);
+   					if(e.style.display == "block") {
+        				e.style.display = "none";
+        			}
+    				else if (level >= 4) {
+    					e.style.display = "block";
+    				}
+				}
+				function toggle_visibility5(id) {
+					var e = document.getElementById(id);
+   					if(e.style.display == "block") {
+        				e.style.display = "none";
+        			}
+    				else if (level >= 5) {
+    					e.style.display = "block";
+    				}
+				}
+				function toggle_visibility6(id) {
+					var e = document.getElementById(id);
+   					if(e.style.display == "block") {
+        				e.style.display = "none";
+        			}
+    				else if (level >= 6) {
+    					e.style.display = "block";
+    				}
+				}
+				function toggle_visibility7(id) {
+					var e = document.getElementById(id);
+   					if(e.style.display == "block") {
+        				e.style.display = "none";
+        			}
+    				else if (level >= 7) {
+    					e.style.display = "block";
+    				}
+				}
+				function toggle_visibility8(id) {
+					var e = document.getElementById(id);
+   					if(e.style.display == "block") {
+        				e.style.display = "none";
+        			}
+    				else if (level >= 8) {
+    					e.style.display = "block";
+    				}
+				}
+				function toggle_visibility9(id) {
+					var e = document.getElementById(id);
+   					if(e.style.display == "block") {
+        				e.style.display = "none";
+        			}
+    				else if (level >= 9) {
+    					e.style.display = "block";
+    				}
+				}
+				function toggle_visibility10(id) {
+					var e = document.getElementById(id);
+   					if(e.style.display == "block") {
+        				e.style.display = "none";
+        			}
+    				else if (level >= 10) {
+    					e.style.display = "block";
+    				}
+				}
+				function toggle_visibility11(id) {
+					var e = document.getElementById(id);
+   					if(e.style.display == "block") {
+        				e.style.display = "none";
+        			}
+    				else if (level >= 11) {
+    					e.style.display = "block";
+    				}
+				}
+				function toggle_visibility12(id) {
+					var e = document.getElementById(id);
+   					if(e.style.display == "block") {
+        				e.style.display = "none";
+        			}
+    				else if (level >= 12) {
+    					e.style.display = "block";
+    				}
+				}
+			</script>
+		</div>
+	</body>
+
+</html>
